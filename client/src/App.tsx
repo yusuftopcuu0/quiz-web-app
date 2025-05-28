@@ -1,15 +1,34 @@
-import { GrCloudSoftware } from 'react-icons/gr'
+import { toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-function App() {
+const MyComponent = () => {
+  const handleClick = () => {
+    toast.success('Başarıyla kaydedildi!')
+    // toast.error('Bir hata oluştu!')
+    // toast.info('Bilgilendirme mesajı')
+    // toast.warn('Dikkat edilmesi gereken bir durum')
+  }
+
   return (
     <>
-      <div>
-        <h1 className="text-2xl mb-4">
-          Let's go for a <GrCloudSoftware className="inline text-yellow-500" />?
-        </h1>
-      </div>
+      <button onClick={handleClick} className="bg-blue-500 text-white px-4 py-2 rounded">
+        Bildirim Göster
+      </button>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   )
 }
 
-export default App
+export default MyComponent
