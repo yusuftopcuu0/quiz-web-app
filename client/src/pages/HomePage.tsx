@@ -1,7 +1,9 @@
-import Footer from '../components/Footer'
-import { Link } from 'react-router-dom'
+import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
+  console.log('HomePage');
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -33,7 +35,7 @@ const HomePage = () => {
         <Footer />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
