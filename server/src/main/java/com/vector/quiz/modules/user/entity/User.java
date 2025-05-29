@@ -1,7 +1,7 @@
 package com.vector.quiz.modules.user.entity;
 
 import com.vector.quiz.common.entity.BaseEntity;
-import com.vector.quiz.common.enums.Role;
+import com.vector.quiz.common.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,5 +20,5 @@ public class User extends BaseEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private UserRole userRole;
 }

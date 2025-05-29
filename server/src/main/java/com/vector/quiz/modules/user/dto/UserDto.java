@@ -1,8 +1,7 @@
 package com.vector.quiz.modules.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vector.quiz.common.dto.BaseDto;
-import com.vector.quiz.common.enums.Role;
+import com.vector.quiz.common.enums.UserRole;
 import jakarta.validation.constraints.NotNull;
 
 public class UserDto extends BaseDto {
@@ -13,5 +12,5 @@ public class UserDto extends BaseDto {
     @NotNull
     private String email;
 
-    private Role role;
+    private UserRole userRole;
 }
