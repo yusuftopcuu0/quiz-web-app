@@ -73,7 +73,7 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to="/services"
+              to="/auth/signup"
               className={({ isActive }) =>
                 `block py-2 px-3 rounded md:p-0 ${
                   isActive
@@ -82,7 +82,7 @@ const Navbar = () => {
                 }`
               }
             >
-              Hakkımızda
+              Kayıt Ol
             </NavLink>
 
             <NavLink

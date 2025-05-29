@@ -33,3 +33,6 @@ dist-ssr
 
 # Genel
 .env
+
+yarn.lock
+package-lock.json
