@@ -1,4 +1,3 @@
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
 
@@ -6,8 +5,6 @@ const HomePage = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <Navbar />
-
         <main className="flex flex-col items-center justify-center flex-grow p-6 bg-gradient-to-b from-blue-100 to-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-blue-700">
             Sınavlara Katıl, Sonuçlarını Takip Et!
