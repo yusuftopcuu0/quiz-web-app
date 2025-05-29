@@ -148,7 +148,7 @@ function Signup() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;

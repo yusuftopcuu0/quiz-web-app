@@ -1,18 +1,14 @@
-import { Routes, Route } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import Navbar from './components/Navbar'
-import Signup from './pages/Signup'
+import { RouterProvider } from 'react-router-dom';
+import router from '@/routes/index';
 
 function App() {
+  console.log('router', router);
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/auth/signup" element={<Signup />} />
-      </Routes>
+      <RouterProvider router={router} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
