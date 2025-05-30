@@ -5,6 +5,7 @@ import ErrorPage from '@/pages/error/ErrorPage.tsx';
 import ProtectedPage from '@/pages/protected/ProtectedPage.tsx';
 import type { RouteObject } from 'react-router-dom';
 import MainLayout from '@/layout/MainLayout.tsx';
+import Login from '@/pages/Login';
 
 const mainNavigation: RouteObject[] = [
   {
@@ -18,6 +19,10 @@ const mainNavigation: RouteObject[] = [
           {
             path: ROUTES.HOME,
             element: <HomePage />,
+          },
+          {
+            path: ROUTES.LOGIN,
+            element: <Login />,
           },
           {
             path: ROUTES.SIGNUP,
