@@ -133,7 +133,10 @@ function Signup() {
               />
             </div>
             <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900">
-              <a href="#" className="text-blue-600 hover:underline dark:text-blue-700 font-bold">
+              <a
+                href="/terms-and-conditions"
+                className="text-blue-600 hover:underline dark:text-blue-700 font-bold"
+              >
                 Şartlar ve koşullar
               </a>
               'a Katılıyorum.
