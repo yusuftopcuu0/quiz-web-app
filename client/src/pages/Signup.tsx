@@ -2,7 +2,7 @@ function Signup() {
   return (
     <div className="signup-content m-5 rounded shadow-xl" style={{ backgroundColor: '#f0f0f0' }}>
       <div className="">
-        <h1 className="text-4xl font-bold text-center pt-5">Giriş Yap</h1>
+        <h1 className="text-4xl font-bold text-center pt-5">Kayıt Ol</h1>
       </div>
 
       <br />
@@ -58,28 +58,6 @@ function Signup() {
                 placeholder=""
                 pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                 required
-              />
-            </div>
-            <div>
-              <label htmlFor="website" className="block mb-2 text-sm font-medium text-gray-900">
-                Website URL
-              </label>
-              <input
-                type="url"
-                id="website"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder=""
-              />
-            </div>
-            <div>
-              <label htmlFor="visitors" className="block mb-2 text-sm font-medium text-gray-900">
-                Benzersiz Ziyaretçiler (Aylık)
-              </label>
-              <input
-                type="number"
-                id="visitors"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="(İsteğe Bağlı)"
               />
             </div>
           </div>
