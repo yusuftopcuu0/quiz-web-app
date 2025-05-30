@@ -5,6 +5,7 @@ import ErrorPage from '@/pages/error/ErrorPage.tsx';
 import ProtectedPage from '@/pages/protected/ProtectedPage.tsx';
 import type { RouteObject } from 'react-router-dom';
 import MainLayout from '@/layout/MainLayout.tsx';
+import TermsAndConditions from '@/pages/TermsAndConditions';
 
 const mainNavigation: RouteObject[] = [
   {
@@ -22,6 +23,10 @@ const mainNavigation: RouteObject[] = [
           {
             path: ROUTES.SIGNUP,
             element: <Signup />,
+          },
+          {
+            path: ROUTES.TERMS_AND_CONDITIONS,
+            element: <TermsAndConditions />,
           },
         ],
       },

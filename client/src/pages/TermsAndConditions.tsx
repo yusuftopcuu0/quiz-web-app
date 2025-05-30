@@ -1,11 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const TermsAndConditions = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gray-100 p-8 text-gray-800">
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold mb-4 text-center">Şartlar ve Koşullar</h1>
-        <p className="mb-4">Uygulamamızı kullanarak aşağıdaki şartları kabul etmiş sayılırsınız.</p>
+        <hr />
+        <p className="mb-4 text-xl mt-2">
+          Uygulamamızı kullanarak aşağıdaki şartları kabul etmiş sayılırsınız.
+        </p>
 
         <h2 className="text-xl font-semibold mt-6 mb-2">1. Hizmet Kullanımı</h2>
         <p className="mb-4">
@@ -32,9 +37,12 @@ const TermsAndConditions = () => {
         </p>
 
         <div className="text-center mt-6">
-          <Link to="/register" className="text-blue-600 hover:underline">
+          <button
+            onClick={() => navigate('/auth/signup')}
+            className="bg-blue-500 text-white rounded p-2"
+          >
             Geri Dön ve Kayıt Ol
-          </Link>
+          </button>
         </div>
       </div>
     </div>
