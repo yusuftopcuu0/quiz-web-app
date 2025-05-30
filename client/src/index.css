@@ -7,3 +7,7 @@ body,
 #root {
   height: 100%;
 }
+
+#login-content {
+  height: 400px;
+}
