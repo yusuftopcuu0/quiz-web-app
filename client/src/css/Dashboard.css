@@ -1,0 +1,23 @@
+.dashboard-left-buttons {
+  width: 170px;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-left-buttons {
+    width: 250px;
+  }
+}
+
+@media (min-width: 1090px) {
+  .dashboard-left-buttons {
+    width: 270px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .dashboard-left-buttons {
+    width: 320px;
+  }
+}

@@ -7,6 +7,8 @@ import type { RouteObject } from 'react-router-dom';
 import MainLayout from '@/layout/MainLayout.tsx';
 import Login from '@/pages/Login';
 import Dashboard from '@/pages/dashboard/Dashboard';
+import Sidebar from '@/components/Sidebar';
+import SidebarLayout from '@/layout/SidebarLayout';
 
 const mainNavigation: RouteObject[] = [
   {
@@ -32,6 +34,17 @@ const mainNavigation: RouteObject[] = [
           {
             path: ROUTES.DASHBOARD,
             element: <Dashboard />,
+          },
+        ],
+      },
+
+      {
+        path: ROUTES.DASHBOARD,
+        element: <SidebarLayout />,
+        children: [
+          {
+            path: ROUTES.DASHBOARD,
+            element: <Sidebar />,
           },
         ],
       },

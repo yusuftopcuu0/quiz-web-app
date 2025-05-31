@@ -1,0 +1,96 @@
+import { MdOutlineDashboard } from 'react-icons/md';
+import { LuNotebookPen } from 'react-icons/lu';
+import { FaChartBar } from 'react-icons/fa';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { IoIosLogOut } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+
+import '../css/Dashboard.css';
+import { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+function Sidebar() {
+  const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeButton, setActiveButton] = useState('dashboard');
+
+  return (
+    <>
+      <div className="sm:hidden p-4 bg-white flex justify-between items-center">
+        <button onClick={() => setIsOpen(!isOpen)} className="text-2xl">
+          <GiHamburgerMenu />
+        </button>
+        <h1 className="text-lg font-bold">Dashboard</h1>
+      </div>
+      <aside
+        className={`${
+          isOpen ? 'flex' : 'hidden'
+        } sm:flex sm:w-1/4 flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4`}
+      >
+        <div className="text-center">
+          <div className="">
+            <button
+              onClick={() => {
+                setActiveButton('dashboard');
+                navigate('/');
+              }}
+              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons w-full ${activeButton === 'dashboard' ? 'bg-green-500 text-white ' : ''}`}
+            >
+              <MdOutlineDashboard />
+              Dashboard
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveButton('exams');
+                navigate('/');
+              }}
+              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'exams' ? 'bg-green-500 text-white' : ''} `}
+            >
+              <LuNotebookPen />
+              Sınavlar
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveButton('statistics');
+                navigate('/');
+              }}
+              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'statistics' ? 'bg-green-500 text-white' : ''}`}
+            >
+              <FaChartBar />
+              İstatistikler
+            </button>
+          </div>
+
+          <div className="" style={{ position: 'absolute', bottom: '0' }}>
+            <div className="">
+              <button
+                onClick={() => {
+                  setActiveButton('settings');
+                  navigate('/');
+                }}
+                className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'settings' ? 'bg-green-500 text-white' : ''}`}
+              >
+                <IoSettingsSharp />
+                Ayarlar
+              </button>
+            </div>
+
+            <div>
+              <button
+                className="flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons"
+                onClick={() => navigate('/')}
+              >
+                <IoIosLogOut />
+                Çıkış Yap
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </>
+  );
+}
+
+export default Sidebar;
