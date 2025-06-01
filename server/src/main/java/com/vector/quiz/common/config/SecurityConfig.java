@@ -28,6 +28,8 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-ui.html",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml"
     };
     private static final String ADMIN_PATH = "/admin/**";
     private static final String PUBLIC_PATHS = "/public/**";

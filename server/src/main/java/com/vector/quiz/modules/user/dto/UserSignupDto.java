@@ -1,14 +1,12 @@
 package com.vector.quiz.modules.user.dto;
 
-import com.vector.quiz.common.dto.BaseDto;
-import com.vector.quiz.common.enums.UserRole;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDto extends BaseDto {
+public class UserSignupDto {
 
     @NotNull
     private String username;
@@ -16,5 +14,6 @@ public class UserDto extends BaseDto {
     @NotNull
     private String email;
 
-    private UserRole userRole;
+    @NotNull
+    private String password;
 }
