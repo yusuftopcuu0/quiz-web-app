@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Dashboard.css';
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
+
 function Sidebar() {
   const navigate = useNavigate();
 
