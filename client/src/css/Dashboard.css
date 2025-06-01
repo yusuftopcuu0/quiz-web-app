@@ -4,6 +4,11 @@
   font-weight: bold;
 }
 
+.dashboard-left-buttons:hover {
+  background-color: #f0f0f0;
+  color: black;
+}
+
 @media (min-width: 1024px) {
   .dashboard-left-buttons {
     width: 250px;
