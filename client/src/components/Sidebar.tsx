@@ -41,7 +41,7 @@ function Sidebar() {
               <MdOutlineDashboard />
               Dashboard
             </button>
-            <hr className="mb-1" />
+            <hr className="pb-3" />
             <button
               onClick={() => {
                 setActiveButton('exams');
@@ -52,7 +52,7 @@ function Sidebar() {
               <LuNotebookPen />
               Sınavlar
             </button>
-            <hr className="mb-1" />
+            <hr className="pb-3" />
             <button
               onClick={() => {
                 setActiveButton('statistics');
@@ -72,12 +72,12 @@ function Sidebar() {
                   setActiveButton('settings');
                   navigate('/');
                 }}
-                className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'settings' ? 'bg-green-500 text-white' : ''}`}
+                className={`flex items-center gap-2 justify-start rounded-lg text-black mb-4 dashboard-left-buttons ${activeButton === 'settings' ? 'bg-green-500 text-white' : ''}`}
               >
                 <IoSettingsSharp />
                 Ayarlar
               </button>
-              <hr />
+              <hr className="pb-3" />
             </div>
 
             <div>
