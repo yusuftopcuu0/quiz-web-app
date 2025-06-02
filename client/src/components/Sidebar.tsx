@@ -41,7 +41,7 @@ function Sidebar() {
               <MdOutlineDashboard />
               Dashboard
             </button>
-
+            <hr className="mb-1" />
             <button
               onClick={() => {
                 setActiveButton('exams');
@@ -52,7 +52,7 @@ function Sidebar() {
               <LuNotebookPen />
               Sınavlar
             </button>
-
+            <hr className="mb-1" />
             <button
               onClick={() => {
                 setActiveButton('statistics');
@@ -77,6 +77,7 @@ function Sidebar() {
                 <IoSettingsSharp />
                 Ayarlar
               </button>
+              <hr />
             </div>
 
             <div>
