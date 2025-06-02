@@ -96,7 +96,7 @@ const Navbar = () => {
                 }`
               }
             >
-              Hakkımızda
+              Dashboard
             </NavLink>
 
             <NavLink
