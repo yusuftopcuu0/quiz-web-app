@@ -17,16 +17,17 @@ function Sidebar() {
 
   return (
     <>
-      <div className="sm:hidden p-4 bg-white flex justify-between items-center">
+      <div className="sm:hidden bg-white absolute top-16 left-0 w-full z-50 text-center flex ps-5 gap-2 py-1">
         <button onClick={() => setIsOpen(!isOpen)} className="text-2xl">
           <GiHamburgerMenu />
         </button>
-        <h1 className="text-lg font-bold">Dashboard</h1>
+        <h1 className="text-lg font-bold">Kenar Çubuğunu {isOpen ? 'Kapat' : 'Aç'}</h1>
       </div>
+
       <aside
         className={`${
           isOpen ? 'flex' : 'hidden'
-        } sm:flex sm:w-1/4 flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4`}
+        } sm:flex sm:w-1/4 flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4 mt-6 sm:mt-2`}
       >
         <div className="text-center">
           <div className="">
@@ -35,7 +36,7 @@ function Sidebar() {
                 setActiveButton('dashboard');
                 navigate('/');
               }}
-              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons w-full ${activeButton === 'dashboard' ? 'bg-green-500 text-white ' : ''}`}
+              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons w-full ${activeButton === 'dashboard' ? 'bg-green-500 text-white' : ''}`}
             >
               <MdOutlineDashboard />
               Dashboard

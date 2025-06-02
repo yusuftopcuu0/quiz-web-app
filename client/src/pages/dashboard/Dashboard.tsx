@@ -3,7 +3,7 @@ import '../../css/Dashboard.css';
 function Dashboard() {
   return (
     <div>
-      <div className="flex min-h-screen bg-white">
+      <div className="flex min-h-screen bg-white mt-4 sm:mt-0">
         <main className="w-full bg-white border p-4 gap-4 border-b">
           <div>
             <div className="flex flex-col sm:flex-row gap-4">
