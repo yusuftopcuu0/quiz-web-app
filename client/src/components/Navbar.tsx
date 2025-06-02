@@ -87,7 +87,7 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to="/about"
+              to="/dashboard"
               className={({ isActive }) =>
                 `block py-2 px-3 rounded md:p-0 ${
                   isActive
