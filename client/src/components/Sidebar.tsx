@@ -18,7 +18,10 @@ function Sidebar() {
   return (
     <>
       <div className="sm:hidden bg-white absolute top-16 left-0 w-full z-50 text-center flex ps-5 gap-2 py-1">
-        <button onClick={() => setIsOpen(!isOpen)} className="text-2xl">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="text-2xl transition-transform duration-300 hover:scale-110"
+        >
           <GiHamburgerMenu />
         </button>
         <h1 className="text-lg font-bold">Kenar Çubuğunu {isOpen ? 'Kapat' : 'Aç'}</h1>
