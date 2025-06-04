@@ -19,14 +19,10 @@ function Sidebar() {
   const handleToggleSidebar = () => {
     if (!isVisible) {
       setIsVisible(true);
-      setTimeout(() => {
-        setIsOpen(true);
-      }, 10);
+      setIsOpen(true);
     } else {
       setIsOpen(false);
-      setTimeout(() => {
-        setIsVisible(false);
-      }, 500);
+      setIsVisible(false);
     }
   };
 
