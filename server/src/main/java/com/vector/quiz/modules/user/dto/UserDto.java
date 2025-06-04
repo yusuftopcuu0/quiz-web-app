@@ -1,7 +1,7 @@
 package com.vector.quiz.modules.user.dto;
 
 import com.vector.quiz.common.dto.BaseDto;
-import com.vector.quiz.common.enums.UserRole;
+import com.vector.quiz.common.enums.Role;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +16,5 @@ public class UserDto extends BaseDto {
     @NotNull
     private String email;
 
-    private UserRole userRole;
+    private Role role;
 }

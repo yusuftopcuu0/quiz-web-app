@@ -1,6 +1,6 @@
 package com.vector.quiz.common.enums;
 
-public enum UserRole {
+public enum Role {
     USER,
     ADMIN
 }

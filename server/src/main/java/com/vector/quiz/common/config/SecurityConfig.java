@@ -1,6 +1,6 @@
 package com.vector.quiz.common.config;
 
-import com.vector.quiz.common.enums.UserRole;
+import com.vector.quiz.common.enums.Role;
 import com.vector.quiz.common.exception.BaseException;
 import com.vector.quiz.common.exception.ErrorMessage;
 import com.vector.quiz.common.exception.MessageType;
@@ -40,35 +40,31 @@ public class SecurityConfig {
     @Autowired
     private JWTAuthenticationFilter jwtAuthenticationFilter;
 
-
-//    @Autowired
-//    private RefreshTokenRepository refreshTokenRepository;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(SWAGGER_PATHS).permitAll()
                         .requestMatchers(PUBLIC_PATHS).permitAll()
-                        .requestMatchers(ADMIN_PATH).hasRole(UserRole.ADMIN.name())
+                        .requestMatchers(ADMIN_PATH).hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessHandler((request, response, authentication) -> {
-                            try {
-                                handleLogout(request, response);
-                            } catch (BaseException e) {
-                                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                                response.setContentType("application/json");
-                                response.getWriter().write("{ \"error\": \"" + e.getMessage() + "\" }");
-                            }
-                        })
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(true));
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//                .logout(logout -> logout
+//                        .logoutUrl("/logout")
+//                        .logoutSuccessHandler((request, response, authentication) -> {
+//                            try {
+//                                handleLogout(request, response);
+//                            } catch (BaseException e) {
+//                                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//                                response.setContentType("application/json");
+//                                response.getWriter().write("{ \"error\": \"" + e.getMessage() + "\" }");
+//                            }
+//                        })
+//                        .clearAuthentication(true)
+//                        .invalidateHttpSession(true));
 
         return http.build();
     }

@@ -29,10 +29,10 @@ public class ApiResponse<T> {
         return apiResponse;
     }
 
-    public static <T> ApiResponse<T> error(T payload) {
+    public static <T> ApiResponse<T> error(String errorMessage, T payload) {
         ApiResponse<T> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(false);
-        apiResponse.setErrorMessage(null);
+        apiResponse.setErrorMessage(errorMessage);
         apiResponse.setPayload(payload);
         return apiResponse;
     }

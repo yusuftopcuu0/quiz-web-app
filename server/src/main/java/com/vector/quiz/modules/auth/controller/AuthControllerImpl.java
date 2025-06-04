@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Paths.PUBLIC_BASE_PATH + "/user")
+@RequestMapping(Paths.PUBLIC_BASE_PATH + "/auth")
 public class AuthControllerImpl extends RestBaseController implements IAuthController {
 
     @Autowired

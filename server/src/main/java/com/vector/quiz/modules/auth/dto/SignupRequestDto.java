@@ -19,6 +19,6 @@ public class SignupRequestDto {
     private String email;
 
     @NotNull(message = "Password cannot be null")
-    @Size(min = 8, message = "Password should be at least 6 characters")
+    @Size(min = 6, message = "Password should be at least 6 characters")
     private String password;
 }

@@ -1,6 +1,10 @@
 package com.vector.quiz.modules.auth.service;
 
-import com.vector.quiz.common.enums.UserRole;
+import com.vector.quiz.common.enums.Role;
+import com.vector.quiz.common.exception.BaseException;
+import com.vector.quiz.common.exception.ErrorMessage;
+import com.vector.quiz.common.exception.MessageType;
+import com.vector.quiz.common.service.impl.AuthenticationServiceImpl;
 import com.vector.quiz.common.utils.JwtUtils;
 import com.vector.quiz.modules.auth.dto.LoginRequestDto;
 import com.vector.quiz.modules.auth.dto.LoginResponseDto;
@@ -37,25 +41,27 @@ public class AuthServiceImpl implements IAuthService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private AuthenticationServiceImpl authenticationServiceImpl;
 
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDto.getLogin(), loginRequestDto.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword())
         );
-        // doğrulama başarılıysa (exception atılmaz)
-        String accessToken = jwtUtils.generateAccessToken(loginRequestDto.getLogin());
-        String refreshTokenString = jwtUtils.generateRefreshToken(loginRequestDto.getLogin());
+        User user = userRepository.findByUsernameOrEmail(loginRequestDto.getUsername(), loginRequestDto.getUsername())
+                .orElseThrow(() -> new BaseException(new ErrorMessage(MessageType.USERNAME_OR_PASSWORD_INVALID, loginRequestDto.getUsername())));
+
+        String accessToken = jwtUtils.generateAccessToken(user);
+        String refreshTokenString = jwtUtils.generateRefreshToken(loginRequestDto.getUsername());
 
         RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUser(userRepository.findByUsername(loginRequestDto.getLogin()).orElseThrow());
+        refreshToken.setUser(userRepository.findByUsername(loginRequestDto.getUsername()).orElseThrow());
         refreshToken.setToken(refreshTokenString);
         refreshToken.setExpiryDate(Instant.now().plusMillis(jwtUtils.getJwtRefreshExpirationMs()));
         refreshTokenRepository.save(refreshToken);
 
-        User user = refreshToken.getUser();
         LoginResponseDto dto = modelMapper.map(user, LoginResponseDto.class);
-        // 2) Access ve refresh token’ları elle set et
         dto.setAccessToken(accessToken);
         dto.setRefreshToken(refreshTokenString);
         return dto;
@@ -64,13 +70,13 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public Void signup(SignupRequestDto signupRequestDto) {
         if (userRepository.existsByUsername(signupRequestDto.getUsername()) || userRepository.existsByEmail(signupRequestDto.getEmail())) {
-            throw new RuntimeException("Kullanıcı zaten kayıtlı");
+            throw new BaseException(new ErrorMessage(MessageType.USERNAME_OR_EMAIL_ALREADY_EXISTS, null));
         }
         User user = new User();
         user.setUsername(signupRequestDto.getUsername());
         user.setEmail(signupRequestDto.getEmail());
         user.setPassword(passwordEncoder.encode(signupRequestDto.getPassword()));
-        user.setUserRole(UserRole.USER);
+        user.setRole(Role.USER);
         userRepository.save(user);
         return null;
     }
@@ -85,13 +91,14 @@ public class AuthServiceImpl implements IAuthService {
         RefreshToken refreshToken = refreshTokenOpt.get();
 
         if (refreshToken.getExpiryDate().isBefore(Instant.now())) {
-            // Süresi dolmuş, DB kaydını sil
             refreshTokenRepository.delete(refreshToken);
             throw new RuntimeException("Refresh Token süresi dolmuş");
         }
-
+        Long userId = authenticationServiceImpl.getCurrentUserId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BaseException(new ErrorMessage(MessageType.USERNAME_OR_PASSWORD_INVALID, null)));
         String username = jwtUtils.getUsernameFromJwtToken(requestRefreshToken);
-        String newAccessToken = jwtUtils.generateAccessToken(username);
+        String newAccessToken = jwtUtils.generateAccessToken(user);
 
         // Opsiyonel: rotate etmek için eskiyi sil, yenisini veritabanına kaydet
         refreshTokenRepository.delete(refreshToken);
@@ -107,6 +114,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Transactional
     public Void logout(String username) {
+        Long userId = authenticationServiceImpl.getCurrentUserId();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
         refreshTokenRepository.deleteByUser(user);

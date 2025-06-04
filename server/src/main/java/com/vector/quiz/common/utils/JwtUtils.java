@@ -1,10 +1,13 @@
 package com.vector.quiz.common.utils;
 
+import com.vector.quiz.modules.user.entity.User;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtUtils {
@@ -21,9 +24,15 @@ public class JwtUtils {
         return jwtRefreshExpirationMs;
     }
 
-    public String generateAccessToken(String username) {
+    public String generateAccessToken(User user) {
+        Map<String, Object> claimsMap = new HashMap<>();
+        claimsMap.put("role", "ROLE_" + user.getRole());
+        claimsMap.put("email", user.getEmail());
+        claimsMap.put("sub", user.getUsername());
+
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(user.getUsername())
+                .setClaims(claimsMap)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes())

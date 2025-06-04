@@ -32,7 +32,7 @@ public class AppConfig {
                     .orElseThrow(() -> new BaseException(new ErrorMessage(MessageType.USERNAME_NOT_FOUND, username)));
 
             // Kullanıcının rolünü authorities’a çeviriyoruz. Eğer tek rol tutuyorsanız:
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getUserRole().name());
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
             List<GrantedAuthority> authorities = List.of(authority);
 
             // Spring’in kendi UserDetails implementasyonu:

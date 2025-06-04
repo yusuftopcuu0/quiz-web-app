@@ -1,7 +1,7 @@
 package com.vector.quiz.modules.auth.dto;
 
 import com.vector.quiz.common.dto.BaseDto;
-import com.vector.quiz.common.enums.UserRole;
+import com.vector.quiz.common.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +15,7 @@ public class LoginResponseDto extends BaseDto {
 
     private String email;
 
-    private UserRole userRole;
+    private Role role;
 
     private String accessToken;
 
