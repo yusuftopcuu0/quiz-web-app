@@ -14,7 +14,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getDetails() == null) {
-            throw new RuntimeException("User not authenticated");
+            throw new RuntimeException("RefreshToken not authenticated");
         }
 
         if (authentication.getPrincipal() == "anonymousUser") {
@@ -29,7 +29,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getPrincipal() == null) {
-            throw new RuntimeException("User not authenticated");
+            throw new RuntimeException("RefreshToken not authenticated");
         }
         return (String) authentication.getPrincipal();
     }

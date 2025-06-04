@@ -1,5 +1,6 @@
 package com.vector.quiz.common.handler;
 
+import com.vector.quiz.common.controller.ApiResponse;
 import com.vector.quiz.common.exception.BaseException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
@@ -20,34 +21,39 @@ import java.util.*;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = {BaseException.class})
-    public ResponseEntity<ApiError<?>> handleBaseException(BaseException ex, WebRequest request) {
-        return ResponseEntity.badRequest().body(createApiError(ex.getMessage(), request));
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ApiResponse<?>> handleBaseException(BaseException ex) {
+        return ResponseEntity
+                .badRequest()
+                .body(ApiResponse.error(ex.getMessage()));
     }
 
     @ExceptionHandler(value = {java.lang.Exception.class})
-    public ResponseEntity<ApiError<?>> handleException(java.lang.Exception ex, WebRequest request) {
-        return ResponseEntity.badRequest().body(createApiError(ex.getMessage(), request));
+    public ResponseEntity<ApiResponse<?>> handleException(Exception ex) {
+        // Genel hata için de 400 ile dönebilir veya isterseniz INTERNAL_SERVER_ERROR ayarlayabilirsiniz
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.error(ex.getMessage().toString()));
     }
 
 
     @ExceptionHandler(value = {ExpiredJwtException.class})
-    public ResponseEntity<ApiError<?>> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(createApiError(ex.getMessage(), request));
+    public ResponseEntity<ApiResponse<?>> handleExpiredJwtException(ExpiredJwtException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(ex.getMessage()));
     }
 
     @ExceptionHandler(value = {RuntimeException.class})
-    public ResponseEntity<ApiError<?>> handleJwtRuntimeException(RuntimeException ex, WebRequest request) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(createApiError("JWT processing error: " + ex.getMessage(), request));
+    public ResponseEntity<ApiResponse<?>> handleJwtRuntimeException(RuntimeException ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(ex.getMessage()));
     }
 
     @ExceptionHandler(value = {AccessDeniedException.class})
-    public ResponseEntity<ApiError<?>> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(createApiError("JWT processing error: " + ex.getMessage(), request));
+    public ResponseEntity<ApiResponse<?>> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(ex.getMessage()));
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public ResponseEntity<ApiError<Map<String, List<String>>>> handleMethodArgumentNotValidException(
+    public ResponseEntity<ApiResponse<Map<String, List<String>>>> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e, WebRequest request) {
 
         Map<String, List<String>> map = new HashMap<>();
@@ -60,15 +66,15 @@ public class GlobalExceptionHandler {
             }
         }
 
-        return ResponseEntity.badRequest().body(createApiError(map, request));
+        return ResponseEntity.badRequest().body(ApiResponse.error(map));
     }
 
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
-    public ResponseEntity<ApiError<?>> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
-                                                                             WebRequest request) {
+    public ResponseEntity<ApiResponse<?>> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+                                                                                WebRequest request) {
         String message = e.getMessage();
 
-        return ResponseEntity.badRequest().body(createApiError(message, request));
+        return ResponseEntity.badRequest().body(ApiResponse.error(message));
     }
 
     private List<String> addValue(List<String> list, String value) {

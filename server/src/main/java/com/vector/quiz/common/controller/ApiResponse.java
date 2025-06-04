@@ -1,16 +1,13 @@
 package com.vector.quiz.common.controller;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
 
-    private HttpStatus status;
+    private boolean status;
 
     private T payload;
 
@@ -18,7 +15,7 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> success(T payload) {
         ApiResponse<T> apiResponse = new ApiResponse<>();
-        apiResponse.setStatus(HttpStatus.OK);
+        apiResponse.setStatus(true);
         apiResponse.setErrorMessage(null);
         apiResponse.setPayload(payload);
         return apiResponse;
@@ -26,9 +23,17 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> error(String errorMessage) {
         ApiResponse<T> apiResponse = new ApiResponse<>();
-        apiResponse.setStatus(HttpStatus.BAD_REQUEST);
+        apiResponse.setStatus(false);
         apiResponse.setErrorMessage(errorMessage);
         apiResponse.setPayload(null);
+        return apiResponse;
+    }
+
+    public static <T> ApiResponse<T> error(T payload) {
+        ApiResponse<T> apiResponse = new ApiResponse<>();
+        apiResponse.setStatus(false);
+        apiResponse.setErrorMessage(null);
+        apiResponse.setPayload(payload);
         return apiResponse;
     }
 }
