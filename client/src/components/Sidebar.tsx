@@ -28,7 +28,7 @@ function Sidebar() {
 
   return (
     <>
-      <div className="sm:hidden bg-white absolute top-16 left-0 w-full z-50 text-center flex gap-2 py-1 ps-50">
+      <div className="sm:hidden bg-white absolute top-16 left-0 w-full z-50 text-center flex ps-5 gap-2 py-1">
         <button
           onClick={handleToggleSidebar}
           className="text-2xl transition-transform duration-300 hover:scale-110"
@@ -37,14 +37,11 @@ function Sidebar() {
         </button>
         <h1 className="text-lg font-bold">Kenar Çubuğunu {isOpen ? 'Kapat' : 'Aç'}</h1>
       </div>
+
       <aside
-        className={`
-    fixed top-0 left-0 h-full w-1/3 sm:static sm:w-1/4
-    bg-white z-50 shadow-lg
-    transition-transform duration-500 ease-in-out
-    transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-    flex flex-col items-center gap-2 p-3
-  `}
+        className={`${
+          isOpen ? 'flex' : 'hidden'
+        } sm:flex sm:w-1/4 flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4 mt-6 sm:mt-2`}
       >
         <div className="text-center">
           <div className="">
