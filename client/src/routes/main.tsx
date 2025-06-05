@@ -18,10 +18,12 @@ const mainNavigation: RouteObject[] = [
           {
             path: ROUTES.HOME,
             element: <HomePage />,
+            errorElement: <ErrorPage />,
           },
           {
             path: ROUTES.SIGNUP,
             element: <Signup />,
+            errorElement: <ErrorPage />,
           },
         ],
       },
