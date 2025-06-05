@@ -37,76 +37,75 @@ function Sidebar() {
         </button>
         <h1 className="text-lg font-bold">Kenar Çubuğunu {isOpen ? 'Kapat' : 'Aç'}</h1>
       </div>
-      {isVisible && (
-        <aside
-          className={`${
-            isOpen ? 'flex' : 'hidden'
-          } sm:flex sm:w-1/4 flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4 mt-6 sm:mt-2`}
-        >
-          <div className="text-center">
+
+      <aside
+        className={`${
+          isOpen ? 'flex' : 'hidden'
+        } sm:flex sm:w-1/4 flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4 mt-6 sm:mt-2`}
+      >
+        <div className="text-center">
+          <div className="">
+            <button
+              onClick={() => {
+                setActiveButton('dashboard');
+                navigate('/');
+              }}
+              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons w-full ${activeButton === 'dashboard' ? 'bg-green-500 text-white' : ''}`}
+            >
+              <MdOutlineDashboard />
+              Dashboard
+            </button>
+            <hr className="pb-3" />
+            <button
+              onClick={() => {
+                setActiveButton('exams');
+                navigate('/');
+              }}
+              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'exams' ? 'bg-green-500 text-white' : ''} `}
+            >
+              <LuNotebookPen />
+              Sınavlar
+            </button>
+            <hr className="pb-3" />
+            <button
+              onClick={() => {
+                setActiveButton('statistics');
+                navigate('/');
+              }}
+              className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'statistics' ? 'bg-green-500 text-white' : ''}`}
+            >
+              <FaChartBar />
+              İstatistikler
+            </button>
+          </div>
+
+          <div className="" style={{ position: 'absolute', bottom: '0' }}>
             <div className="">
               <button
                 onClick={() => {
-                  setActiveButton('dashboard');
+                  setActiveButton('settings');
                   navigate('/');
                 }}
-                className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons w-full ${activeButton === 'dashboard' ? 'bg-green-500 text-white' : ''}`}
+                className={`flex items-center gap-2 justify-start rounded-lg text-black mb-4 dashboard-left-buttons ${activeButton === 'settings' ? 'bg-green-500 text-white' : ''}`}
               >
-                <MdOutlineDashboard />
-                Dashboard
+                <IoSettingsSharp />
+                Ayarlar
               </button>
               <hr className="pb-3" />
-              <button
-                onClick={() => {
-                  setActiveButton('exams');
-                  navigate('/');
-                }}
-                className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'exams' ? 'bg-green-500 text-white' : ''} `}
-              >
-                <LuNotebookPen />
-                Sınavlar
-              </button>
-              <hr className="pb-3" />
-              <button
-                onClick={() => {
-                  setActiveButton('statistics');
-                  navigate('/');
-                }}
-                className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'statistics' ? 'bg-green-500 text-white' : ''}`}
-              >
-                <FaChartBar />
-                İstatistikler
-              </button>
             </div>
 
-            <div className="" style={{ position: 'absolute', bottom: '0' }}>
-              <div className="">
-                <button
-                  onClick={() => {
-                    setActiveButton('settings');
-                    navigate('/');
-                  }}
-                  className={`flex items-center gap-2 justify-start rounded-lg text-black mb-4 dashboard-left-buttons ${activeButton === 'settings' ? 'bg-green-500 text-white' : ''}`}
-                >
-                  <IoSettingsSharp />
-                  Ayarlar
-                </button>
-                <hr className="pb-3" />
-              </div>
-
-              <div>
-                <button
-                  className="flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons"
-                  onClick={() => navigate('/')}
-                >
-                  <IoIosLogOut />
-                  Çıkış Yap
-                </button>
-              </div>
+            <div>
+              <button
+                className="flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons"
+                onClick={() => navigate('/')}
+              >
+                <IoIosLogOut />
+                Çıkış Yap
+              </button>
             </div>
           </div>
-        </aside>
-      )}
+        </div>
+      </aside>
     </>
   );
 }
