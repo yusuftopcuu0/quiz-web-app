@@ -21,20 +21,6 @@ public class ModelMapperConfig {
             return new HashSet<>(context.getSource());
         });
 
-//        modelMapper.addMappings(new PropertyMap<ProductCreateDto, Product>() {
-//            @Override
-//            protected void configure() {
-//                skip(destination.getId());
-//            }
-//        });
-//
-//        modelMapper.addMappings(new PropertyMap<ReviewCreateDto, Review>() {
-//            @Override
-//            protected void configure() {
-//                skip(destination.getId());
-//            }
-//        });
-
         return modelMapper;
     }
 }

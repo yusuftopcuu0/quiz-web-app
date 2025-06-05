@@ -6,10 +6,7 @@ import com.vector.quiz.common.exception.ErrorMessage;
 import com.vector.quiz.common.exception.MessageType;
 import com.vector.quiz.common.service.impl.AuthenticationServiceImpl;
 import com.vector.quiz.common.utils.JwtUtils;
-import com.vector.quiz.modules.auth.dto.LoginRequestDto;
-import com.vector.quiz.modules.auth.dto.LoginResponseDto;
-import com.vector.quiz.modules.auth.dto.RefreshTokenDto;
-import com.vector.quiz.modules.auth.dto.SignupRequestDto;
+import com.vector.quiz.modules.auth.dto.*;
 import com.vector.quiz.modules.auth.entity.RefreshToken;
 import com.vector.quiz.modules.auth.repository.RefreshTokenRepository;
 import com.vector.quiz.modules.user.entity.User;
@@ -55,6 +52,11 @@ public class AuthServiceImpl implements IAuthService {
         String accessToken = jwtUtils.generateAccessToken(user);
         String refreshTokenString = jwtUtils.generateRefreshToken(loginRequestDto.getUsername());
 
+        refreshTokenRepository.findByUser(user).ifPresent(existing -> {
+            refreshTokenRepository.delete(existing);
+        });
+
+
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setUser(userRepository.findByUsername(loginRequestDto.getUsername()).orElseThrow());
         refreshToken.setToken(refreshTokenString);
@@ -83,40 +85,39 @@ public class AuthServiceImpl implements IAuthService {
 
 
     @Transactional
-    public RefreshTokenDto refreshToken(String requestRefreshToken) {
-        Optional<RefreshToken> refreshTokenOpt = refreshTokenRepository.findByToken(requestRefreshToken);
+    public RefreshTokenDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto) {
+        Optional<RefreshToken> refreshTokenOpt = refreshTokenRepository.findByToken(refreshTokenRequestDto.getRefreshToken());
         if (refreshTokenOpt.isEmpty()) {
-            throw new RuntimeException("Refresh Token bulunamadı");
+            throw new BaseException(new ErrorMessage(MessageType.REFRESH_TOKEN_NOT_FOUND, null));
         }
         RefreshToken refreshToken = refreshTokenOpt.get();
 
         if (refreshToken.getExpiryDate().isBefore(Instant.now())) {
             refreshTokenRepository.delete(refreshToken);
-            throw new RuntimeException("Refresh Token süresi dolmuş");
+            throw new BaseException(new ErrorMessage(MessageType.REFRESH_TOKEN_IS_EXPIRED, null));
         }
-        Long userId = authenticationServiceImpl.getCurrentUserId();
-        User user = userRepository.findById(userId)
+        User user = userRepository.findById(refreshTokenRequestDto.getUserId())
                 .orElseThrow(() -> new BaseException(new ErrorMessage(MessageType.USERNAME_OR_PASSWORD_INVALID, null)));
-        String username = jwtUtils.getUsernameFromJwtToken(requestRefreshToken);
+        String username = jwtUtils.getUsernameFromJwtToken(refreshTokenRequestDto.getRefreshToken());
         String newAccessToken = jwtUtils.generateAccessToken(user);
 
-        // Opsiyonel: rotate etmek için eskiyi sil, yenisini veritabanına kaydet
-        refreshTokenRepository.delete(refreshToken);
         String newRefreshString = jwtUtils.generateRefreshToken(username);
-        RefreshToken newRefreshTokenEntity = new RefreshToken();
-        newRefreshTokenEntity.setUser(refreshToken.getUser());
-        newRefreshTokenEntity.setToken(newRefreshString);
-        newRefreshTokenEntity.setExpiryDate(Instant.now().plusMillis(jwtUtils.getJwtRefreshExpirationMs()));
-        refreshTokenRepository.save(newRefreshTokenEntity);
+        refreshToken.setToken(newRefreshString);
+        refreshToken.setExpiryDate(
+                Instant.now().plusMillis(jwtUtils.getJwtRefreshExpirationMs()));
+        refreshTokenRepository.save(refreshToken);
 
-        return modelMapper.map(newRefreshTokenEntity, RefreshTokenDto.class);
+        RefreshTokenDto response = new RefreshTokenDto();
+        response.setAccessToken(newAccessToken);
+        response.setRefreshToken(newRefreshString);
+        return response;
     }
 
     @Transactional
-    public Void logout(String username) {
+    public Void logout() {
         Long userId = authenticationServiceImpl.getCurrentUserId();
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, "Kullanıcı bulunamadı")));
         refreshTokenRepository.deleteByUser(user);
         return null;
     }

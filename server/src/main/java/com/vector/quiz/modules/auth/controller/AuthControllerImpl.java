@@ -1,48 +1,43 @@
 package com.vector.quiz.modules.auth.controller;
 
-import com.vector.quiz.common.constants.Paths;
+import com.vector.quiz.common.config.ApiPaths;
 import com.vector.quiz.common.controller.ApiResponse;
 import com.vector.quiz.common.controller.impl.RestBaseController;
-import com.vector.quiz.modules.auth.dto.LoginRequestDto;
-import com.vector.quiz.modules.auth.dto.LoginResponseDto;
-import com.vector.quiz.modules.auth.dto.RefreshTokenDto;
-import com.vector.quiz.modules.auth.dto.SignupRequestDto;
+import com.vector.quiz.modules.auth.dto.*;
 import com.vector.quiz.modules.auth.service.IAuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Paths.PUBLIC_BASE_PATH + "/auth")
 public class AuthControllerImpl extends RestBaseController implements IAuthController {
 
     @Autowired
     private IAuthService authService;
 
-    @PostMapping("/login")
+    @PostMapping(ApiPaths.Auth.LOGIN)
     @Override
     public ApiResponse<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         return ok(authService.login(loginRequestDto));
     }
 
-    @PostMapping("/signup")
+    @PostMapping(ApiPaths.Auth.SIGNUP)
     @Override
     public ApiResponse<Void> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
         return ok(authService.signup(signupRequestDto));
     }
 
-    @PostMapping("/refresh-token")
+    @PostMapping(ApiPaths.Auth.REFRESH_TOKEN)
     @Override
-    public ApiResponse<RefreshTokenDto> refreshToken(@Valid @RequestBody String requestRefreshToken) {
-        return ok(authService.refreshToken(requestRefreshToken));
+    public ApiResponse<RefreshTokenDto> refreshToken(@Valid @RequestBody RefreshTokenRequestDto refreshTokenRequestDto) {
+        return ok(authService.refreshToken(refreshTokenRequestDto));
     }
 
-    @PostMapping("/logout")
+    @PostMapping(ApiPaths.Auth.LOGOUT)
     @Override
-    public ApiResponse<Void> logout(@Valid @RequestBody String username) {
-        return ok(authService.logout(username));
+    public ApiResponse<Void> logout() {
+        return ok(authService.logout());
     }
 }

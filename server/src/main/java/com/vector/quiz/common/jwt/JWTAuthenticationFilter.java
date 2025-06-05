@@ -1,6 +1,6 @@
 package com.vector.quiz.common.jwt;
 
-import com.vector.quiz.common.jwt.JWTService;
+import com.vector.quiz.common.utils.JwtUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private HandlerExceptionResolver handlerExceptionResolver;
 
     @Autowired
-    private JWTService jwtService;
+    private JwtUtils jwtUtils;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -46,16 +46,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         token = header.substring(7);
         try {
-            username = jwtService.getUserNameByToken(token);
+            //    username = jwtService.getUserNameByToken(token);
+            username = jwtUtils.getUsernameFromJwtToken(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                if (userDetails != null && jwtService.isTokenValid(token)) {
-//                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-//                            userDetails, null, userDetails.getAuthorities());
-//                    authenticationToken.setDetails(userDetails);
-//                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-                    String role = jwtService.exportToken(token, claims -> claims.get("role", String.class));
+                if (userDetails != null && jwtUtils.validateJwtToken(token)) {
+                    String role = jwtUtils.exportToken(token, claims -> claims.get("role", String.class));
                     List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, authorities);

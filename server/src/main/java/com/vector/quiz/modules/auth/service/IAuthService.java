@@ -1,9 +1,6 @@
 package com.vector.quiz.modules.auth.service;
 
-import com.vector.quiz.modules.auth.dto.LoginRequestDto;
-import com.vector.quiz.modules.auth.dto.LoginResponseDto;
-import com.vector.quiz.modules.auth.dto.RefreshTokenDto;
-import com.vector.quiz.modules.auth.dto.SignupRequestDto;
+import com.vector.quiz.modules.auth.dto.*;
 
 public interface IAuthService {
 
@@ -11,7 +8,7 @@ public interface IAuthService {
 
     Void signup(SignupRequestDto signupRequestDto);
 
-    RefreshTokenDto refreshToken(String requestRefreshToken);
+    RefreshTokenDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
 
-    Void logout(String username);
+    Void logout();
 }

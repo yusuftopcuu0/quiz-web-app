@@ -1,12 +1,7 @@
 package com.vector.quiz.common.config;
 
 import com.vector.quiz.common.enums.Role;
-import com.vector.quiz.common.exception.BaseException;
-import com.vector.quiz.common.exception.ErrorMessage;
-import com.vector.quiz.common.exception.MessageType;
 import com.vector.quiz.common.jwt.JWTAuthenticationFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -52,43 +45,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessHandler((request, response, authentication) -> {
-//                            try {
-//                                handleLogout(request, response);
-//                            } catch (BaseException e) {
-//                                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//                                response.setContentType("application/json");
-//                                response.getWriter().write("{ \"error\": \"" + e.getMessage() + "\" }");
-//                            }
-//                        })
-//                        .clearAuthentication(true)
-//                        .invalidateHttpSession(true));
 
         return http.build();
     }
-
-    public void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new BaseException(
-                    new ErrorMessage(MessageType.REFRESH_TOKEN_NOT_FOUND, "Token not found"));
-        }
-
-        String jwt = authHeader.substring(7);
-        //TODO change to refresh token
-//        RefreshToken storedToken = refreshTokenRepository.findByRefreshToken(jwt).orElse(null);
-
-//        if (storedToken == null) {
-//            throw new BaseException(
-//                    new ErrorMessage(MessageType.REFRESH_TOKEN_NOT_FOUND, "Token not found"));
-//        }
-//
-//        refreshTokenRepository.delete(storedToken);
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json");
-        response.getWriter().write("{ \"message\": \"Logout successful\" }");
-    }
-
 }

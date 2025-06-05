@@ -2,12 +2,16 @@ package com.vector.quiz.common.utils;
 
 import com.vector.quiz.modules.user.entity.User;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Component
 public class JwtUtils {
@@ -29,6 +33,7 @@ public class JwtUtils {
         claimsMap.put("role", "ROLE_" + user.getRole());
         claimsMap.put("email", user.getEmail());
         claimsMap.put("sub", user.getUsername());
+        claimsMap.put("id", user.getId());
 
         return Jwts.builder()
                 .setSubject(user.getUsername())
@@ -49,20 +54,52 @@ public class JwtUtils {
     }
 
     public String getUsernameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).build().parseClaimsJws(token).getBody().getSubject();
-//        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(jwtSecret.getBytes()).build().parseClaimsJws(token).getBody().getSubject();
     }
+
+    public Long getUserIdFromJwtToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        Object idClaim = claims.get("id");
+        if (idClaim instanceof Integer) {
+            return ((Integer) idClaim).longValue();
+        } else if (idClaim instanceof Long) {
+            return (Long) idClaim;
+        }
+        return null;
+    }
+
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).build().parseClaimsJws(authToken);
-//            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(jwtSecret.getBytes()).build().parseClaimsJws(authToken);
             return true;
         } catch (ExpiredJwtException e) {
-            // Token süresi geçmiş
+            return false;
         } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
-            // Geçersiz format, imza hatası vb.
+            return false;
         }
-        return false;
     }
+
+    public <T> T exportToken(String token, Function<Claims, T> claimsFunc) {
+        Claims claims = getClaims(token);
+        return claimsFunc.apply(claims);
+    }
+
+    public Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(getRawKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    private Key getRawKey() {
+        byte[] keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
 }

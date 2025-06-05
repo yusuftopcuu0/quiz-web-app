@@ -1,10 +1,7 @@
 package com.vector.quiz.modules.auth.controller;
 
 import com.vector.quiz.common.controller.ApiResponse;
-import com.vector.quiz.modules.auth.dto.LoginRequestDto;
-import com.vector.quiz.modules.auth.dto.LoginResponseDto;
-import com.vector.quiz.modules.auth.dto.RefreshTokenDto;
-import com.vector.quiz.modules.auth.dto.SignupRequestDto;
+import com.vector.quiz.modules.auth.dto.*;
 
 public interface IAuthController {
 
@@ -12,7 +9,7 @@ public interface IAuthController {
 
     ApiResponse<Void> signup(SignupRequestDto signupRequestDto);
 
-    ApiResponse<RefreshTokenDto> refreshToken(String requestRefreshToken);
+    ApiResponse<RefreshTokenDto> refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
 
-    ApiResponse<Void> logout(String username);
+    ApiResponse<Void> logout();
 }
