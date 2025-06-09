@@ -1,7 +1,47 @@
+import { useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../constant/routes';
+
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+
+    try {
+      if (trimmedEmail !== '' && trimmedPassword !== '' && trimmedPassword.length >= 6) {
+        toast.success('Giriş Başarılı. Yönlendiriliyorsunuz.', {
+          autoClose: 2500,
+        });
+        setTimeout(() => {
+          navigate(ROUTES.DASHBOARD);
+        }, 3000);
+      } else {
+        toast.error('Hatalı Giriş', {
+          autoClose: 3500,
+        });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Hata mesajı: ' + error.message);
+        toast.error('Hata mesajı: ' + error.message);
+      } else {
+        console.error('Bilinmeyen bir hata oluştu.');
+      }
+    }
+  };
+
   return (
-    <div style={{ height: '100vh' }}>
-      <div className="flex flex-col justify-center bg-amber-200 py-10" id="login-content">
+    <div className="flex flex-col justify-center" style={{ height: '100vh' }}>
+      <ToastContainer />
+      <div className="py-10 mx-5 rounded" id="login-content" style={{ backgroundColor: '#f3f3f3' }}>
         <div>
           <h1 className="text-3xl font-bold text-center pt-5">Giriş Yap</h1>
         </div>
@@ -11,7 +51,7 @@ function Login() {
             htmlFor="input-group-1"
             className="block mb-2 text-lg font-medium text-gray-900 dark:text-black"
           >
-            Your Email
+            E-Mail
           </label>
           <div className="flex">
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-blue-600 dark:text-gray-400 dark:border-gray-600">
@@ -27,10 +67,11 @@ function Login() {
               </svg>
             </span>
             <input
-              type="text"
-              id="website-admin"
-              className="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="elonmusk"
+              type="email"
+              className="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="E-mailiniz..."
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 
@@ -38,7 +79,7 @@ function Login() {
             htmlFor="website-admin"
             className="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-7"
           >
-            Username
+            Şifre
           </label>
           <div className="flex">
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-red-600 dark:text-gray-400 dark:border-gray-600">
@@ -53,16 +94,25 @@ function Login() {
               </svg>
             </span>
             <input
-              type="text"
-              id="website-admin"
-              className="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="elonmusk"
+              type="password"
+              className="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Şifreniz..."
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
+          </div>
+          <div>
+            <button
+              onClick={handleLogin}
+              className="bg-green-500 rounded text-white p-2 mt-5 hover:bg-green-600 w-full"
+            >
+              Giriş Yap
+            </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
