@@ -40,8 +40,8 @@ function Sidebar() {
 
       <aside
         className={`${
-          isOpen ? 'flex' : 'hidden'
-        } sm:flex sm:w-1/4 flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4 mt-6 sm:mt-2`}
+          isOpen ? 'flex min-h-screen min-w-screen' : 'hidden'
+        } sm:flex flex-col items-center gap-2 p-3 sm:static z-50 h-full sm:mx-4 md:mx-0 lg:w-1/4 mt-6 sm:mt-2`}
       >
         <div className="text-center">
           <div className="">
