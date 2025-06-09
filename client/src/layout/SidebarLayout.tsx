@@ -8,8 +8,9 @@ export default function SidebarLayout() {
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 bg-gray-100"></div>
-        <Dashboard />
+        <div className="flex-1 bg-gray-300">
+          <Dashboard />
+        </div>
       </div>
     </div>
   );

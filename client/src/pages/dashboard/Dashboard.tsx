@@ -5,7 +5,7 @@ import { UpcomingEventsCalendar } from '@/components/UpcomingEventsCalendar';
 
 function Dashboard() {
   return (
-    <div className="relative overflow-hidden sm:w-3/4">
+    <div className="relative overflow-hidden sm:w-4/4">
       <div className="flex min-h-screen bg-white mt-4 sm:mt-0 w-full">
         <main className="w-full bg-white border p-4 gap-4 border-b">
           <div className="">
