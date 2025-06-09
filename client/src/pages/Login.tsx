@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../constant/routes';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const logClick = () => {
+  const handleLogin = () => {
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
 
@@ -20,7 +21,7 @@ function Login() {
           autoClose: 2500,
         });
         setTimeout(() => {
-          navigate('/dashboard');
+          navigate(ROUTES.DASHBOARD);
         }, 3000);
       } else {
         toast.error('Hatalı Giriş', {
@@ -102,7 +103,7 @@ function Login() {
           </div>
           <div>
             <button
-              onClick={logClick}
+              onClick={handleLogin}
               className="bg-green-500 rounded text-white p-2 mt-5 hover:bg-green-600 w-full"
             >
               Giriş Yap
