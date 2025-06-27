@@ -91,7 +91,7 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to="/about"
+              to="/dashboard"
               className={({ isActive }) =>
                 `block py-2 px-3 rounded md:p-0 ${isActive
                   ? 'text-blue-700 dark:text-blue-500'
@@ -99,7 +99,7 @@ const Navbar = () => {
                 }`
               }
             >
-              Hakkımızda
+              Dashboard
             </NavLink>
 
             <NavLink
