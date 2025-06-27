@@ -59,7 +59,7 @@ function Sidebar() {
             <button
               onClick={() => {
                 setActiveButton('exams');
-                navigate('/');
+                navigate('/dashboard/quizzes');
               }}
               className={`flex items-center gap-2 justify-start rounded-lg text-black mb-5 dashboard-left-buttons ${activeButton === 'exams' ? 'bg-green-500 text-white' : ''} `}
             >

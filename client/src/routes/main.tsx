@@ -9,6 +9,7 @@ import Login from '@/pages/Login';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import Sidebar from '@/components/Sidebar';
 import SidebarLayout from '@/layout/SidebarLayout';
+import Quizzes from '@/pages/Quizzes';
 
 const mainNavigation: RouteObject[] = [
   {
@@ -34,6 +35,10 @@ const mainNavigation: RouteObject[] = [
           {
             path: ROUTES.DASHBOARD,
             element: <Dashboard />,
+          },
+          {
+            path: ROUTES.QUIZZES,
+            element: <Quizzes />,
           },
         ],
       },
