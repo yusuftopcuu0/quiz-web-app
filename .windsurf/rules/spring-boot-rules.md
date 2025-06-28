@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Quiz Uygulaması Global Prompt
 
 Bu proje, kullanıcıların çevrimiçi quizler oluşturup çözebileceği bir web uygulamasıdır.
