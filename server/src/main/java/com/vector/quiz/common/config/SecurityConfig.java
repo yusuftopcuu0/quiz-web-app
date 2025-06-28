@@ -18,11 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
     private static final String[] SWAGGER_PATHS = {
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
             "/swagger-ui/**",
-            "/v3/api-docs/**",
             "/swagger-ui.html",
-            "/v3/api-docs/**",
-            "/v3/api-docs.yaml"
+            "/swagger-resources/**",
+            "/webjars/**"
     };
     private static final String ADMIN_PATH = "/admin/**";
     private static final String PUBLIC_PATHS = "/public/**";
