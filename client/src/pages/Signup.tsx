@@ -1,4 +1,46 @@
+import axios from 'axios'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+// import { useNavigate } from 'react-router-dom'
+
+// import { ROUTES } from '../constant/routes'
+import 'react-toastify/dist/ReactToastify.css'
+
 function Signup() {
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleRegister = async () => {
+    console.log('object')
+    try {
+      const response = await axios.post<AuthResponses>(
+        'https://quiz-app-g16u.onrender.com/public/api/auth/signup',
+        {
+          username,
+          email,
+          password,
+        },
+      )
+
+      toast.success('Giriş başarılı! Yönlendiriliyorsunuz.', {
+        autoClose: 2500,
+      })
+
+      localStorage.setItem('accessToken', response.data.accessToken)
+
+      setTimeout(() => {
+        navigate(ROUTES.DASHBOARD)
+      }, 3000)
+    } catch (error: any) {
+      console.error('Giriş hatası:', error)
+      const message =
+        error?.response?.data?.payload?.join('') ||
+        error?.response?.data?.errorMessage ||
+        'Giriş başarısız. Lütfen tekrar deneyin.'
+      toast.error(message, { autoClose: 3500 })
+    }
+  }
   return (
     <div className="signup-content m-5 rounded shadow-xl" style={{ backgroundColor: '#f0f0f0' }}>
       <div className="">
@@ -22,6 +64,8 @@ function Signup() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder=""
                 required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
           </div>
@@ -34,6 +78,8 @@ function Signup() {
               id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder=""
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -55,9 +101,10 @@ function Signup() {
               <input
                 id="remember"
                 type="checkbox"
-                value=""
                 className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900">
@@ -68,6 +115,7 @@ function Signup() {
             </label>
           </div>
           <button
+            onClick={handleRegister}
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
