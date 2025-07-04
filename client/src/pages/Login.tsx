@@ -33,7 +33,10 @@ function Login() {
       }, 3000);
     } catch (error: any) {
       console.error('Giriş hatası:', error);
-      const message = error?.response?.data?.message || 'Giriş başarısız. Lütfen tekrar deneyin.';
+      const message =
+        error?.response?.data?.payload?.join('') ||
+        error?.response?.data?.errorMessage ||
+        'Giriş başarısız. Lütfen tekrar deneyin.';
       toast.error(message, { autoClose: 3500 });
     }
   };
