@@ -15,7 +15,6 @@ function Signup() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('object')
     try {
       const response = await axios.post<AuthResponses>(
         'https://quiz-app-g16u.onrender.com/public/api/auth/signup',
@@ -26,21 +25,23 @@ function Signup() {
         },
       )
 
-      toast.success('Giriş başarılı! Yönlendiriliyorsunuz.', {
+      toast.success('Kayıt başarılı! Giriş Sayfasına Yönlendiriliyorsunuz.', {
         autoClose: 2500,
       })
 
-      localStorage.setItem('accessToken', response.data.accessToken)
+      console.log('Kayıt başarılı:', response.data)
+
+      localStorage.setItem('user', JSON.stringify(response.data))
 
       setTimeout(() => {
-        navigate(ROUTES.DASHBOARD)
+        navigate(ROUTES.LOGIN)
       }, 3000)
     } catch (error: any) {
       console.error('Giriş hatası:', error)
       const message =
         error?.response?.data?.payload?.join('') ||
         error?.response?.data?.errorMessage ||
-        'Giriş başarısız. Lütfen tekrar deneyin.'
+        'Kayıt başarısız. Lütfen tekrar deneyin.'
       toast.error(message, { autoClose: 3500 })
     }
   }
