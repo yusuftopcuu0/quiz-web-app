@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-// import { useNavigate } from 'react-router-dom'
-
-// import { ROUTES } from '../constant/routes'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../constant/routes'
+import type { AuthResponses } from '../types/RegisterAuth'
 import 'react-toastify/dist/ReactToastify.css'
 
 function Signup() {
@@ -11,7 +11,10 @@ function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleRegister = async () => {
+  const navigate = useNavigate()
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault()
     console.log('object')
     try {
       const response = await axios.post<AuthResponses>(
@@ -62,7 +65,6 @@ function Signup() {
                 type="text"
                 id="first_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder=""
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -77,7 +79,6 @@ function Signup() {
               type="email"
               id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder=""
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -91,7 +92,8 @@ function Signup() {
               type="password"
               id="password"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder=""
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -103,8 +105,6 @@ function Signup() {
                 type="checkbox"
                 className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900">
@@ -116,7 +116,7 @@ function Signup() {
           </div>
           <button
             onClick={handleRegister}
-            type="submit"
+            type="button"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Gönder
