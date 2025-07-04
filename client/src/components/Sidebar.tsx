@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Dashboard.css';
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import LogoutButton from './LogoutButton';
 
 function Sidebar() {
   const navigate = useNavigate();
@@ -100,7 +101,7 @@ function Sidebar() {
                 onClick={() => navigate('/')}
               >
                 <IoIosLogOut />
-                Çıkış Yap
+                <LogoutButton />
               </button>
             </div>
           </div>
