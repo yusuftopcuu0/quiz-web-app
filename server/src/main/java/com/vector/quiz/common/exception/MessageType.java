@@ -14,8 +14,9 @@ public enum MessageType {
     USERNAME_NOT_FOUND("1006", "Username not found"),
     REFRESH_TOKEN_NOT_FOUND("1008", "Refresh token not found"),
     REFRESH_TOKEN_IS_EXPIRED("1009", "Refresh token is expired"),
-    USERNAME_OR_PASSWORD_INVALID("1007", "Username or password invalid");
-
+    USERNAME_OR_PASSWORD_INVALID("1007", "Username or password invalid"),
+    QUIZ_NOT_FOUND("2001", "Quiz not found"),
+    QUESTION_NOT_FOUND("2002", "Question not found");
 
     private final String code;
 
