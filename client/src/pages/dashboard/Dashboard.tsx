@@ -2,10 +2,23 @@ import '../../css/Dashboard.css';
 import { MdPeopleOutline } from 'react-icons/md';
 import { ModuleScoresChart } from '@/components/ModuleScoresChart';
 import { UpcomingEventsCalendar } from '@/components/UpcomingEventsCalendar';
+import { useGetAllQuizzes } from '@/api/queries/useQuiz.ts';
 
 function Dashboard() {
+  const { data: quiezzes } = useGetAllQuizzes();
+
   return (
     <div className="relative overflow-hidden sm:w-4/4">
+      {quiezzes &&
+        quiezzes.map(quiz => (
+          <div
+            key={quiz.id}
+            className="card bg-white border rounded-xl flex-1 h-20 text-center flex items-top justify-center pt-1 px-2 gap-2"
+          >
+            <h1>{quiz.content}</h1>
+            <MdPeopleOutline className="mt-1" />
+          </div>
+        ))}
       <div className="flex min-h-screen bg-white mt-4 sm:mt-0 w-full">
         <main className="w-full bg-white border p-4 gap-4 border-b">
           <div className="">

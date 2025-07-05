@@ -1,7 +1,7 @@
 export interface AuthRequestBody {
   username?: string | null;
   email?: string | null;
-  password: 'string';
+  password: string;
 }
 
 export interface AuthResponses {

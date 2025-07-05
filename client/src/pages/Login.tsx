@@ -1,44 +1,18 @@
 import { useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../constant/routes';
-import axios from 'axios';
-import type { AuthResponses } from '@/types/Auth';
+
+import { ToastContainer } from 'react-toastify';
+import { useLogin } from '@/api/queries/useAuth.ts';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const { mutateAsync: login, isPending } = useLogin();
 
   const handleLogin = async () => {
-    console.log('object');
-    try {
-      const response = await axios.post<AuthResponses>(
-        'https://quiz-app-g16u.onrender.com/public/api/auth/login',
-        {
-          username: email,
-          password,
-        }
-      );
-
-      toast.success('Giriş başarılı! Yönlendiriliyorsunuz.', {
-        autoClose: 2500,
-      });
-
-      localStorage.setItem('accessToken', response.data.accessToken);
-
-      setTimeout(() => {
-        navigate(ROUTES.DASHBOARD);
-      }, 3000);
-    } catch (error: any) {
-      console.error('Giriş hatası:', error);
-      const message =
-        error?.response?.data?.payload?.join('') ||
-        error?.response?.data?.errorMessage ||
-        'Giriş başarısız. Lütfen tekrar deneyin.';
-      toast.error(message, { autoClose: 3500 });
-    }
+    await login({
+      username: email,
+      password,
+    });
   };
 
   return (
@@ -82,6 +56,7 @@ function Login() {
 
           <button
             onClick={handleLogin}
+            disabled={isPending}
             className="bg-green-500 rounded text-white p-2 mt-5 hover:bg-green-600 w-full"
           >
             Giriş Yap
