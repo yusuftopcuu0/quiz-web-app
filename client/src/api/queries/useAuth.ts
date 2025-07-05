@@ -14,3 +14,15 @@ export const useLogin = () => {
     },
   });
 };
+
+export const useRegister = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: service.register,
+    onSuccess: data => {
+      localStorage.setItem('user', JSON.stringify(data));
+      navigate(ROUTES.LOGIN);
+    },
+  });
+};
