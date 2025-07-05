@@ -81,8 +81,8 @@ public class GlobalExceptionHandler {
 
     private <T extends Exception> ResponseEntity<ApiResponse<?>> buildErrorResponse(
             MessageType type, T ex, HttpStatus status) {
-        String msg = type.getMessage() + " : " + type.getCode() + " - " + ex.getMessage();
-        return ResponseEntity.status(status).body(ApiResponse.error(msg));
+//        String msg = type.getMessage() + " : " + type.getCode() + " - " + ex.getMessage();
+        return ResponseEntity.status(status).body(ApiResponse.error(ex.getMessage()));
     }
 
 }
