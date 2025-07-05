@@ -18,13 +18,22 @@ public class SwaggerConfig {
     @Value("${server.port:8080}")
     private int serverPort;
 
+    @Value("${spring.profiles.active:development}")
+    private String activeProfile;
+
     @Bean
     public OpenAPI customOpenAPI() {
         final String securitySchemeName = "bearerAuth";
-        
+
         Server server = new Server();
-        server.setUrl("http://localhost:" + serverPort);
-        server.setDescription("Development server");
+
+        if ("production".equals(activeProfile)) {
+            server.setUrl("https://quiz-app-g16u.onrender.com"); // Production URL
+            server.setDescription("Production server");
+        } else {
+            server.setUrl("http://localhost:" + serverPort);
+            server.setDescription("Development server");
+        }
 
         return new OpenAPI()
                 .servers(List.of(server))
