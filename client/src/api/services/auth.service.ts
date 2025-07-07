@@ -15,3 +15,7 @@ export function register(body: AuthRequestBody) {
 
   return unwrapResponse<AuthResponses>(getApiClient(true).post(`${baseUrl}/signup`, body));
 }
+
+export function logout() {
+  return unwrapResponse(getApiClient(true).post(`${baseUrl}/logout`));
+}

@@ -25,3 +25,13 @@ export const useRegister = () => {
     },
   });
 };
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: service.logout,
+    onSuccess: () => {
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+    },
+  });
+};
