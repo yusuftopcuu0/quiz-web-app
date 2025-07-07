@@ -20,8 +20,7 @@ export const useRegister = () => {
 
   return useMutation({
     mutationFn: service.register,
-    onSuccess: data => {
-      localStorage.setItem('user', JSON.stringify(data));
+    onSuccess: () => {
       navigate(ROUTES.LOGIN);
     },
   });
