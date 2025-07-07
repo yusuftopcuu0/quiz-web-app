@@ -1,41 +1,51 @@
-import React, { useState } from 'react';
+import { useGetAllQuizzes } from '@/api/queries/useQuiz';
+import { ROUTES } from '@/constant/routes';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Quizzes = () => {
-  interface Lesson {
-    id: string;
-    name: string;
+  const navigate = useNavigate();
+  const { data: quizzes, isLoading, error } = useGetAllQuizzes();
+
+  if (!localStorage.getItem('user')) {
+    navigate(ROUTES.LOGIN);
+
+    return null;
   }
 
-  const lessons: Lesson[] = [
-    { id: '1', name: 'Web Geliştirme' },
-    { id: '2', name: 'Veritabanı Yönetimi' },
-    { id: '3', name: 'Siber Güvenlik' },
-    { id: '4', name: 'Yapay Zeka' },
-    { id: '5', name: 'Bilgisayar Ağları' },
-  ];
+  if (isLoading) return <div>Loading...</div>;
 
-  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+  if (error) {
+    toast.error('Quizzes could not be loaded');
+
+    return <div>Error loading quizzes</div>;
+  }
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-center">Ders Seçimi</h1>
+      <h1 className="text-center">Quizzes</h1>
 
       <hr />
 
-      {lessons.map(lesson => (
-        <button
-          className="rounded-lg"
-          key={lesson.id}
-          onClick={() => setSelectedLesson(lesson)}
-          style={{
-            margin: '10px',
-            padding: '10px',
-            backgroundColor: selectedLesson?.id === lesson.id ? 'lightblue' : 'white',
-          }}
-        >
-          {lesson.name}
-        </button>
-      ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+        {quizzes?.map(quiz => (
+          <div
+            key={quiz.id}
+            className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
+          >
+            <h2 className="text-lg font-semibold mb-2">{quiz.content}</h2>
+            <p className="text-gray-600">{quiz.questionType}</p>
+            <div className="mt-4">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                onClick={() => navigate(`/quiz/${quiz.id}`)}
+              >
+                Start Quiz
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

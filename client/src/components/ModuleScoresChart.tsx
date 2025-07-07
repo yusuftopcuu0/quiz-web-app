@@ -13,7 +13,6 @@ export const ModuleScoresChart = () => {
       <h2 className="text-lg font-semibold mb-1">Ortalama Sınav Puanları</h2>
       <p className="text-sm text-gray-500 mb-2">Ocak - Haziran 2025</p>
 
-      {/* ResponsiveContainer dışına sabit yükseklikli bir div koyuyoruz */}
       <div className="w-full h-[250px] sm:h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
