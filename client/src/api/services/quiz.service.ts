@@ -15,3 +15,11 @@ export function getQuizById(quizId: number) {
 export function createQuiz(quiz: QuizResponse) {
   return unwrapResponse<QuizResponse[]>(getApiClient().post(baseUrl, quiz));
 }
+
+export function updateQuiz(quiz: QuizResponse) {
+  return unwrapResponse<QuizResponse[]>(getApiClient().put(`${baseUrl}/${quiz.id}`, quiz));
+}
+
+export function deleteQuiz(quizId: number) {
+  return unwrapResponse<QuizResponse[]>(getApiClient().delete(`${baseUrl}/${quizId}`));
+}

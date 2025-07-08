@@ -22,7 +22,25 @@ export function useCreateQuiz(quiz: QuizResponse) {
   return useMutation({
     mutationFn: () => service.createQuiz(quiz),
     onSuccess: () => {
-      toast.success('Quiz created successfully');
+      toast.success('Quiz başarıyla oluşturuldu');
+    },
+  });
+}
+
+export function useUpdateQuiz(quiz: QuizResponse) {
+  return useMutation({
+    mutationFn: () => service.updateQuiz(quiz),
+    onSuccess: () => {
+      toast.success('Quiz başarıyla güncellendi');
+    },
+  });
+}
+
+export function useDeleteQuiz(quizId: number) {
+  return useMutation({
+    mutationFn: () => service.deleteQuiz(quizId),
+    onSuccess: () => {
+      toast.success('Quiz başarıyla silindi');
     },
   });
 }
