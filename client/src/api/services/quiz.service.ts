@@ -11,3 +11,7 @@ export function getAllQuizzes() {
 export function getQuizById(quizId: number) {
   return unwrapResponse<QuizResponse[]>(getApiClient().get(`${baseUrl}/${quizId}`));
 }
+
+export function createQuiz(quiz: QuizResponse) {
+  return unwrapResponse<QuizResponse[]>(getApiClient().post(baseUrl, quiz));
+}
