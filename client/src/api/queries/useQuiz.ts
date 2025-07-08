@@ -8,3 +8,15 @@ export function useGetAllQuizzes() {
     queryFn: service.getAllQuizzes,
   });
 }
+
+export function useGetQuizById(quizId: number) {
+  return useQuery<QuizResponse[], Error>({
+    queryKey: ['getQuizById', quizId],
+    queryFn: () => service.getQuizById(quizId),
+    enabled: !!quizId,
+  });
+}
+
+// return useQuery<QuizResponse[], Error>({
+//   queryKey: ['getQuizById'],
+// });

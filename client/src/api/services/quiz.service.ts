@@ -7,3 +7,7 @@ const baseUrl = '/quizzes';
 export function getAllQuizzes() {
   return unwrapResponse<QuizResponse[]>(getApiClient().get(baseUrl));
 }
+
+export function getQuizById(quizId: number) {
+  return unwrapResponse<QuizResponse[]>(getApiClient().get(`${baseUrl}/${quizId}`));
+}
