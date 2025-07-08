@@ -36,9 +36,9 @@ export function useUpdateQuiz(quiz: QuizResponse) {
   });
 }
 
-export function useDeleteQuiz(quizId: number) {
+export function useDeleteQuiz() {
   return useMutation({
-    mutationFn: () => service.deleteQuiz(quizId),
+    mutationFn: (quizId: number) => service.deleteQuiz(quizId),
     onSuccess: () => {
       toast.success('Quiz başarıyla silindi');
     },
