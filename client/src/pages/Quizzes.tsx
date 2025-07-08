@@ -2,6 +2,7 @@ import { useGetAllQuizzes } from '@/api/queries/useQuiz';
 import { ROUTES } from '@/constant/routes';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import '../css/Spinner.css';
 
 const Quizzes = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Quizzes = () => {
     return null;
   }
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div className="spinner"></div>;
 
   if (error) {
     toast.error('Quizzes could not be loaded');
