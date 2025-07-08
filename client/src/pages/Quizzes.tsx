@@ -21,6 +21,8 @@ const Quizzes = () => {
     return <div>Error loading quizzes</div>;
   }
 
+  console.log('quiz', quizzes);
+
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-center">Quizzes</h1>
@@ -33,8 +35,8 @@ const Quizzes = () => {
             key={quiz.id}
             className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
           >
-            <h2 className="text-lg font-semibold mb-2">{quiz.content}</h2>
-            <p className="text-gray-600">{quiz.questionType}</p>
+            <h2 className="text-lg font-semibold mb-2">{quiz.title}</h2>
+            <p className="text-gray-600">{quiz.description}</p>
             <div className="mt-4">
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"

@@ -1,11 +1,20 @@
 export interface QuizResponse {
   id: number;
-  content: string;
-  questionType: QuestionType;
-  points: number;
+  title: string;
+  description: string;
+  durationMinutes: number;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
-  answers: Answer[];
+  createdBy: {
+    id: number;
+    username: string;
+    email: string;
+    roles: string[];
+    createdAt: string;
+    updatedAt: string;
+  };
+  questions: Question[];
 }
 
 interface Answer {

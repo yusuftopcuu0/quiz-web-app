@@ -9,6 +9,7 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: service.login,
     onSuccess: data => {
+      console.log('data', data);
       localStorage.setItem('user', JSON.stringify(data));
       navigate(ROUTES.DASHBOARD);
     },
