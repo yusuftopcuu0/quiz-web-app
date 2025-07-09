@@ -1,4 +1,4 @@
-import { useGetAllQuizzes, useDeleteQuiz } from '@/api/queries/useQuiz';
+import { useGetAllQuizzes, useDeleteQuiz, useUpdateQuiz } from '@/api/queries/useQuiz';
 import { ROUTES } from '@/constant/routes';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,6 +8,17 @@ const Quizzes = () => {
   const navigate = useNavigate();
   const { data: quizzes, isLoading, error } = useGetAllQuizzes();
   const deleteQuiz = useDeleteQuiz();
+  useUpdateQuiz({
+    id: 0,
+    title: '',
+    description: '',
+    durationMinutes: 0,
+    isActive: false,
+    createdAt: '',
+    updatedAt: '',
+    createdBy: [],
+    questions: [],
+  });
 
   const handleDeleteQuiz = (quizId: number) => {
     if (window.confirm('Bu quizi silmek istediğinizden emin misiniz?')) {
