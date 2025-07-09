@@ -18,9 +18,9 @@ export function useGetQuizById(quizId: number) {
   });
 }
 
-export function useCreateQuiz(quiz: QuizResponse) {
+export function useCreateQuiz() {
   return useMutation({
-    mutationFn: () => service.createQuiz(quiz),
+    mutationFn: service.createQuiz,
     onSuccess: () => {
       toast.success('Quiz başarıyla oluşturuldu');
     },

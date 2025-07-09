@@ -42,3 +42,20 @@ enum QuestionType {
   TRUE_FALSE = 'TRUE_FALSE',
   SHORT_ANSWER = 'SHORT_ANSWER',
 }
+
+export interface CreateQuizRequest {
+  title: string;
+  description: string;
+  durationMinutes: number;
+  isActive: boolean;
+  questions: Questions[];
+}
+
+export interface UpdateQuizRequest {
+  id: number;
+  title: string;
+  description: string;
+  durationMinutes: number;
+  isActive: boolean;
+  questions: Questions[];
+}
