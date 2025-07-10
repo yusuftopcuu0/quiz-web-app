@@ -117,7 +117,7 @@ const Quizzes = () => {
               <div className="mt-4 flex gap-2">
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                  onClick={() => navigate(`/quiz/${quiz.id}`)}
+                  onClick={() => navigate(ROUTES.QUIZ_PAGE.replace(':id', quiz.id.toString()))}
                 >
                   Sınava Başla
                 </button>

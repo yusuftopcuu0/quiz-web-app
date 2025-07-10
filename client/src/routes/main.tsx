@@ -10,6 +10,7 @@ import Dashboard from '@/pages/dashboard/Dashboard';
 import Sidebar from '@/components/Sidebar';
 import SidebarLayout from '@/layout/SidebarLayout';
 import Quizzes from '@/pages/Quizzes';
+import QuizPage from '@/pages/QuizPage';
 
 const mainNavigation: RouteObject[] = [
   {
@@ -54,6 +55,11 @@ const mainNavigation: RouteObject[] = [
             element: <Sidebar />,
           },
         ],
+      },
+
+      {
+        path: ROUTES.QUIZ_PAGE,
+        element: <QuizPage />,
       },
     ],
   },

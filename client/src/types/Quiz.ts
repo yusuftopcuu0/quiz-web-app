@@ -1,3 +1,5 @@
+import type { QuestionType } from './Question';
+
 export interface QuizResponse {
   id: number;
   title: string;
@@ -35,12 +37,6 @@ interface Answer {
   isCorrect: boolean;
   createdAt: string;
   updatedAt: string;
-}
-
-enum QuestionType {
-  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
-  TRUE_FALSE = 'TRUE_FALSE',
-  SHORT_ANSWER = 'SHORT_ANSWER',
 }
 
 export interface CreateQuizRequest {

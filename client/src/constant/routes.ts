@@ -5,5 +5,6 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   QUIZZES: '/dashboard/quizzes',
   CREATE_QUIZ: '/dashboard/create-quiz',
+  QUIZ_PAGE: '/quiz/:id',
   NOT_FOUND: '*',
 };

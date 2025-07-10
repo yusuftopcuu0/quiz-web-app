@@ -11,9 +11,9 @@ export function useGetAllQuizzes() {
 }
 
 export function useGetQuizById(quizId: number) {
-  return useQuery<QuizResponse[], Error>({
+  return useQuery<QuizResponse, Error>({
     queryKey: ['getQuizById', quizId],
-    queryFn: () => service.getQuizById(quizId),
+    queryFn: () => service.getQuizById(quizId).then(quizzes => quizzes[0] ?? undefined),
     enabled: !!quizId,
   });
 }
