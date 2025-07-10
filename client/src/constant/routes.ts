@@ -4,5 +4,6 @@ export const ROUTES = {
   SIGNUP: '/auth/signup',
   DASHBOARD: '/dashboard',
   QUIZZES: '/dashboard/quizzes',
+  CREATE_QUIZ: '/dashboard/create-quiz',
   NOT_FOUND: '*',
 };

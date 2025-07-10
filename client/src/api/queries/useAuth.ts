@@ -9,8 +9,30 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: service.login,
     onSuccess: data => {
+      console.log('data', data);
       localStorage.setItem('user', JSON.stringify(data));
       navigate(ROUTES.DASHBOARD);
+    },
+  });
+};
+
+export const useRegister = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: service.register,
+    onSuccess: () => {
+      navigate(ROUTES.LOGIN);
+    },
+  });
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: service.logout,
+    onSuccess: () => {
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
     },
   });
 };

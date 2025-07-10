@@ -1,38 +1,25 @@
 import { ROUTES } from '@/constant/routes';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import type { AuthResponses } from './types/Auth';
+import { useLogout } from '@/api/queries/useAuth';
 
 function LogoutButton() {
   const navigate = useNavigate();
+  const { mutateAsync: logout } = useLogout();
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post<AuthResponses>(
-        'https://quiz-app-g16u.onrender.com/rest/api/auth/logout'
-        // {
-        //    username: email,
-        //    password,
-        // }
-      );
-
+      await logout();
       toast.success('Çıkış başarılı! Yönlendiriliyorsunuz.', {
         autoClose: 2500,
       });
-
-      localStorage.setItem('accessToken', response.data.accessToken);
 
       setTimeout(() => {
         navigate(ROUTES.HOME);
       }, 3000);
     } catch (error: any) {
-      console.error('Giriş hatası:', error);
-      const message =
-        error?.response?.data?.payload?.join('') ||
-        error?.response?.data?.errorMessage ||
-        'Çıkış başarısız. Lütfen tekrar deneyin.';
-      toast.error(message, { autoClose: 3500 });
+      console.error('Çıkış hatası:', error);
+      toast.error('Çıkış başarısız. Lütfen tekrar deneyin.');
     }
   };
 

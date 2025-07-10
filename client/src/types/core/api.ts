@@ -5,5 +5,5 @@ export type AxiosErrorMessage = AxiosError<{ message: string }>;
 export interface BaseResponse<T> {
   isSuccess: boolean;
   errorMessage: string;
-  data: T | null;
+  payload: T | null;
 }
