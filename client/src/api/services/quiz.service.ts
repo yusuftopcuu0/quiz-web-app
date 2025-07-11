@@ -9,7 +9,7 @@ export function getAllQuizzes() {
 }
 
 export function getQuizById(quizId: number) {
-  return unwrapResponse<QuizResponse[]>(getApiClient().get(`${baseUrl}/${quizId}`));
+  return unwrapResponse<QuizResponse>(getApiClient().get(`${baseUrl}/${quizId}`));
 }
 
 export function createQuiz(params: CreateQuizRequest) {

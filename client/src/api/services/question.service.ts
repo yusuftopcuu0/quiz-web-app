@@ -9,6 +9,8 @@ export function getAllQuestions() {
 }
 
 export function getQuestionById(questionId: number) {
+  console.log('questionId isteniyor:', questionId);
+
   return unwrapResponse<Question[]>(getApiClient().get(`${baseUrl}/${questionId}`));
 }
 
