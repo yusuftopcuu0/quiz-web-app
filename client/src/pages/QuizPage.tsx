@@ -1,12 +1,14 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetQuizById } from '@/api/queries/useQuiz';
 import { useState } from 'react';
+import { ROUTES } from '@/constant/routes';
 
 function QuizPage() {
   const { id } = useParams() as { id: string };
   const { data: quiz, isLoading, error } = useGetQuizById(Number(id));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <div className="flex items-center justify-center h-screen">Yükleniyor...</div>;
@@ -30,8 +32,6 @@ function QuizPage() {
     setSelectedOption(optionIndex);
   };
 
-  console.log('quiz title: ', quiz.title);
-
   return (
     <div className="min-h-screen flex flex-col">
       <div className="max-w-2xl mx-auto p-6">
@@ -52,7 +52,9 @@ function QuizPage() {
                 onClick={() => handleOptionSelect(index)}
                 className={`w-full p-3 rounded-lg transition-colors ${
                   selectedOption === index
-                    ? 'bg-blue-500 text-white'
+                    ? answer.isCorrect
+                      ? 'bg-green-500 text-white'
+                      : 'bg-red-500 text-white'
                     : 'bg-gray-100 hover:bg-gray-200'
                 }`}
               >
@@ -69,22 +71,31 @@ function QuizPage() {
             >
               Önceki Soru
             </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-              onClick={() => {
-                if (selectedOption !== null) {
-                  setCurrentQuestionIndex(prev => Math.min(quiz.questions.length - 1, prev + 1));
-                  setSelectedOption(null);
+
+            {selectedOption !== null && currentQuestionIndex !== quiz.questions.length - 1 ? (
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                onClick={() => {
+                  if (selectedOption !== null) {
+                    setCurrentQuestionIndex(prev => Math.min(quiz.questions.length - 1, prev + 1));
+                    setSelectedOption(null);
+                  }
+                }}
+                disabled={
+                  currentQuestionIndex === quiz.questions.length - 1 || selectedOption === null
                 }
-              }}
-              disabled={
-                currentQuestionIndex === quiz.questions.length - 1 || selectedOption === null
-              }
-            >
-              {currentQuestionIndex === quiz.questions.length - 1
-                ? 'Testi Bitir'
-                : 'Bir Sonraki Soru'}
-            </button>
+              >
+                Bir Sonraki Soru
+              </button>
+            ) : (
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                onClick={() => navigate(ROUTES.QUIZZES)}
+                // disabled={selectedOption !== null}
+              >
+                Testi Bitir
+              </button>
+            )}
           </div>
         </div>
       </div>
